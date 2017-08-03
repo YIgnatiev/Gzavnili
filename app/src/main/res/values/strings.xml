@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Gzavnili</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    // splash
+    <string name="text_splash">სწრაფი, იაფი \n
+        და უსაფრთხო მიწოდება!</string>
+
+    // page login
+    <string name="login_label">კაბინეტში შესვლა</string>
+    <string name="hint_login">ელ-ფოსტა ანკაბინეტის ნომერი</string>
+    <string name="hint_password">პაროლი</string>
+    <string name="text_button_sign_up">შესვლა</string>
+    <string name="text_dont_have_account">არ გაქვთ ანგარიში? " "</string>
+    <string name="text_sign_up_free">უფასო რეგისტრაცია</string>
+    <string name="text_skip_authorization">ავტორიზაციის გარეშე</string>
+
+    // page sign up
+    <string name="hint_first_name">სახელი</string>
+    <string name="hint_last_name">გვარი</string>
+    <string name="hint_email">ელ-ფოსტა</string>
+    <string name="hint_phone">მობილური</string>
+    <string name="hint_confirm_password">პაროლი</string>
+    <string name="text_btn_sign_up">ანგარიშის შექმნა</string>
+    <string name="text_term_privacy_part1">ანგარიშის შექმნაზე დაწკაპებით თქვენ ეთანხმებით \n</string>
+    <string name="text_term_privacy_part2">წესებს დაპირობებს</string>
+    <string name="text_term_privacy_part3"> " " და " "</string>
+    <string name="text_term_privacy_part4">პერსონალური მონაცემების გამოყენების პირობებს</string>
+
+    // error
+    <string name="error_first_name">მოკლე სახელი</string>
+    <string name="error_last_name">მოკლე გვარი</string>
+    <string name="error_email">არასწორი ელ.ფოსტა</string>
+    <string name="error_phone">არასწორი ტელეფონი</string>
+    <string name="error_pass">მოკლე პაროლი</string>
+
+    // title navigation bottom
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
+    <string name="title_parcels">Parcels</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_calculator">Calculator</string>
+    <string name="title_offices">Offices</string>
+    <string name="title_settings">Settings</string>
+
+    // title toolbar
+    <string name="title_detail_parcel">Parcel details</string>
+
+
+    // text in item
+    <string name="text_tracking">Tracking number</string>
+    <string name="text_location">Location</string>
+
+    // text label in detail parcel
+    <string name="text_parcel_value">Parcel Value:</string>
+    <string name="text_parcel_weight">Weight:</string>
+    <string name="text_parcel_store">Store:</string>
+    <string name="text_parcel_content">Parcel Content:</string>
+    <string name="text_parcel_service_type">Service type:</string>
+    <string name="text_parcel_price">Price:</string>
+    <string name="text_receiver_info">Receiver information</string>
+    <string name="text_first_name">First Name:</string>
+    <string name="text_last_name">Last Name:</string>
+    <string name="text_cell_phone">Cell Phone:</string>
+    <string name="text_address">Address:</string>
+    <string name="text_city">City:</string>
+    <string name="text_private">Private#:</string>
+
+</resources>

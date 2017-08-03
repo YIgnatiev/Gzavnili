@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_parcels"
+        android:icon="@mipmap/ic_parcels"
+        android:title="@string/title_parcels" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@mipmap/ic_notification"
+        android:title="@string/title_notifications" />
+
+    <item
+        android:id="@+id/navigation_calculator"
+        android:icon="@mipmap/ic_calculator"
+        android:title="@string/title_calculator" />
+
+    <item
+        android:id="@+id/navigation_offices"
+        android:icon="@mipmap/ic_offices"
+        android:title="@string/title_offices" />
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@mipmap/ic_settings"
+        android:title="@string/title_settings" />
+
+</menu>

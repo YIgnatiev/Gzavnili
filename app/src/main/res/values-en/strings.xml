@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gzavnili</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    // splash
+    <string name="text_splash">A Faster, Cheaper \n
+            and Safer Shipping!</string>
+
+    // page login
+    <string name="login_label">Login to your account</string>
+    <string name="hint_login">User ID or Email</string>
+    <string name="hint_password">Password</string>
+    <string name="text_button_sign_up">LOGIN</string>
+    <string name="text_dont_have_account">Don’t have account? " "</string>
+    <string name="text_sign_up_free">Sign Up FREE</string>
+    <string name="text_skip_authorization">Skip authorization</string>
+
+    // page sign up
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_phone">Cell phone</string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="text_btn_sign_up">SIGN UP</string>
+    <string name="text_term_privacy_part1">Clicking SIGNUP you accept the \n</string>
+    <string name="text_term_privacy_part2">Terms &amp; Conditions </string>
+    <string name="text_term_privacy_part3"> " " and " "</string>
+    <string name="text_term_privacy_part4">Privacy Policy</string>
+
+    // error
+    <string name="error_first_name">Short Name</string>
+    <string name="error_last_name">Short Last name</string>
+    <string name="error_email">Incorrect E-mail</string>
+    <string name="error_phone">Incorrect phone</string>
+    <string name="error_pass">Short password</string>
+
+    // title navigation bottom
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
+    <string name="title_parcels">Parcels</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_calculator">Calculator</string>
+    <string name="title_offices">Offices</string>
+    <string name="title_settings">Settings</string>
+
+    // title toolbar
+    <string name="title_detail_parcel">Parcel details</string>
+
+    // text in item
+    <string name="text_tracking">Tracking number</string>
+    <string name="text_location">Location</string>
+    
+    // text label in detail parcel
+    <string name="text_parcel_value">Parcel Value:</string>
+    <string name="text_parcel_weight">Weight:</string>
+    <string name="text_parcel_store">Store:</string>
+    <string name="text_parcel_content">Parcel Content:</string>
+    <string name="text_parcel_service_type">Service type:</string>
+    <string name="text_parcel_price">Price:</string>
+    <string name="text_receiver_info">Receiver information</string>
+    <string name="text_first_name">First Name:</string>
+    <string name="text_last_name">Last Name:</string>
+    <string name="text_cell_phone">Cell Phone:</string>
+    <string name="text_address">Address:</string>
+    <string name="text_city">City:</string>
+    <string name="text_private">Private#:</string>
+</resources>
