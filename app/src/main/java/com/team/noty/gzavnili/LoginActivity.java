@@ -30,6 +30,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.paperdb.Paper;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText mLogin, mPassword;
@@ -54,6 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // Hide status bar
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+
+        Paper.init(this);
 
         mLogin = (EditText) findViewById(R.id.edit_login);
         mPassword = (EditText) findViewById(R.id.edit_password);
@@ -119,10 +123,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("MyLog", "login " + response);
                         try {
                             showProgressBar(false);
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("STATUS").equals("S")) {
+                                Paper.book().write("responseLogin", jsonObject.getString("DATA"));
                                 Intent intent = new Intent(LoginActivity.this, BottomNavActivity.class);
                                 intent.putExtra("response", jsonObject.getString("DATA"));
                                 startActivity(intent);

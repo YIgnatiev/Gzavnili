@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             app:tabGravity="fill"
             app:tabMode="scrollable"
+            app:tabIndicatorColor="@android:color/white"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
     </android.support.design.widget.AppBarLayout>

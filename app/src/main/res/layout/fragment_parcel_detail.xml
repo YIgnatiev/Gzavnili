@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/back_signup_page"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -12,8 +13,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/layout_tracking"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:background="@drawable/back_item_parcel"
             android:elevation="20dp">
+
 
         </LinearLayout>
 
@@ -24,7 +33,10 @@
             android:background="@drawable/back_item_parcel"
             android:elevation="20dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,10 +53,19 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_detail_info" />
+                    android:id="@+id/txt_edit"
+                    android:text="@string/text_edit"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_done"
+                    android:visibility="gone"
+                    android:text="@string/text_done"
+                    android:textColor="@color/colorPrimary"/>
             </LinearLayout>
 
             <TextView
@@ -80,12 +101,17 @@
                         android:text="@string/text_parcel_value"
                         android:textColor="@color/color_text_label_item" />
 
-                    <TextView
-                        android:id="@+id/txt_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <EditText
+                        android:id="@+id/edit_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:enabled="false"
+                        android:background="@color/white"
+                        android:inputType="text"
                         android:textColor="@color/color_text_info_item"
+                        android:textCursorDrawable="@drawable/cursor"
                         android:textSize="18sp" />
 
                 </LinearLayout>
@@ -133,11 +159,16 @@
                         android:text="@string/text_parcel_store"
                         android:textColor="@color/color_text_label_item" />
 
-                    <TextView
-                        android:id="@+id/txt_store"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <EditText
+                        android:id="@+id/edit_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:inputType="text"
+                        android:enabled="false"
+                        android:textCursorDrawable="@drawable/cursor"
+                        android:layout_marginRight="5dp"
                         android:textColor="@color/color_text_info_item"
                         android:textSize="18sp" />
 
@@ -156,10 +187,10 @@
                         android:text="@string/text_parcel_content"
                         android:textColor="@color/color_text_label_item" />
 
-                    <TextView
+                    <Spinner
                         android:id="@+id/txt_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/color_text_info_item"
                         android:textSize="18sp" />
@@ -227,10 +258,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:id="@+id/layout_receiver"
             android:background="@drawable/back_item_parcel"
             android:elevation="20dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:layout_width="wrap_content"

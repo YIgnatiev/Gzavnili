@@ -45,11 +45,26 @@
 
     // title toolbar
     <string name="title_detail_parcel">Parcel details</string>
+    <string name="title_schedule_parcel">Parcel schedule</string>
 
     // text in item
     <string name="text_tracking">Tracking number</string>
     <string name="text_location">Location</string>
-    
+
+    // text toolbar menu
+    <string name="delivery_request">Delivery request</string>
+    <string name="share_parcels">Share parcels</string>
+    <string name="make_payment">Make payment</string>
+
+    // text dialog share
+    <string name="title_dialog">Parcel share</string>
+    <string name="text_information">Please, provide receiver information</string>
+    <string name="text_field_last_first_name">First and Last name</string>
+    <string name="text_email_or_phone">Email or Phone</string>
+    <string name="text_private_number">Private Number</string>
+    <string name="text_button_cancel">Cancel</string>
+    <string name="text_button_ok">OK</string>
+
     // text label in detail parcel
     <string name="text_parcel_value">Parcel Value:</string>
     <string name="text_parcel_weight">Weight:</string>
@@ -64,4 +79,84 @@
     <string name="text_address">Address:</string>
     <string name="text_city">City:</string>
     <string name="text_private">Private#:</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_done">Done</string>
+
+    <string name="label_choose_receiver">Choose receiver</string>
+    <string name="text_button_submit">Submit</string>
+
+    // text for item offices
+    <string name="text_tel">Tel</string>
+    <string name="text_fax">Fax</string>
+    <string name="text_email">Email</string>
+    <string name="text_working_hours">Working hours</string>
+
+    // list locations
+    <string name="brooklyn">1914 Kings Highway, 2 FL Brooklyn NY</string>
+    <string name="transit">In Transit</string>
+    <string name="tbilisi">41 Tashkent Street Tbilisi, Georgia</string>
+    <string name="out_of_delivery">Out or Delivery</string>
+    <string name="receiver_address">Receiver’s Address</string>
+
+    // title proof
+    <string name="tittle_proof">Proof of Delivery</string>
+    <string name="text_label_driver">Driver:</string>
+
+    // fragment payment
+    <string name="title_payment">Make Payment</string>
+
+    // page settings
+    <string name="text_account_details">Account details</string>
+    <string name="text_settings_cell_phone">Cell Phone</string>
+    <string name="text_founds">Funds</string>
+    <string name="text_home_address">Home Address</string>
+    <string name="text_work_address">Work Address</string>
+    <string name="text_receivers">Receivers</string>
+    <string name="text_app_settings">App Settings</string>
+    <string name="text_help">Help</string>
+    <string name="text_notifications">Notifications</string>
+    <string name="text_geolocation">Geolocation</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="text_language">Language</string>
+    <string name="label_about">About</string>
+    <string name="text_about">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+        Aenean commodo ligula eget dolor. Aenean massa.
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+        Nulla consequat massa quis enim.</string>
+    <string name="text_follow_us">Follow Us</string>
+
+    // page Add funds
+    <string name="text_account_balance">Account Balance:</string>
+    <string name="title_add_funds">Add funds</string>
+    <string name="text_amount">Amount</string>
+
+    // page calculator
+    <string name="text_label_price">PRICE</string>
+    <string name="text_label_arrival_day">Arrival day</string>
+    <string name="text_label_weight">Weight</string>
+    <string name="text_label_length">Length</string>
+    <string name="text_label_height">Height</string>
+    <string name="text_label_width">Width</string>
+    <string name="text_label_choose_service">Choose service</string>
+    <string name="text_regular_service">Regular Service</string>
+    <string name="text_express_service">Express Service</string>
+    <string name="text_label_parcel_type">Parcel type</string>
+    <string name="text_regular_parcel">Regular Parcel</string>
+    <string name="text_online_parcel">Online Parcel</string>
+    <string name="text_label_ship_day">Ship day</string>
+    <string name="text_mon">Mon.</string>
+    <string name="text_tue">Tue.</string>
+    <string name="text_wen">Wen.</string>
+    <string name="text_thu">Thu.</string>
+    <string name="text_fri">Fri.</string>
+    <string name="text_sat">Sat.</string>
+    <string name="text_sun">Sun.</string>
+    <string name="text_kg">kg</string>
+    <string name="text_lb">lb</string>
+    <string name="text_sm">sm</string>
+    <string name="text_in">in</string>
+
+    <string name="title_receiver_list">Receivers list</string>
+
 </resources>

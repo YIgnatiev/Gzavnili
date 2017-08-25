@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=""
+        android:ems="5"
+        android:textColor="@color/color_text_label_item" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/line_top"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/line_traking" />
+
+        <CheckBox
+            android:id="@+id/cb_checked"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/check_box_selector"
+
+            android:button="@color/white"
+            android:checked="true" />
+
+        <ImageView
+            android:id="@+id/line_bottom"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/line_traking" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txt_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cb_checked"
+        android:layout_alignTop="@+id/cb_checked"
+        android:layout_toEndOf="@+id/cb_checked"
+        android:layout_toRightOf="@+id/cb_checked"
+        android:gravity="center_vertical"
+        android:text="lksfawjfawopfj"
+        android:textColor="@color/text_color_grey"
+        android:textSize="18sp" />
+
+
+</LinearLayout>

@@ -2,16 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/back_signup_page"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/message"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/title_notifications" />
+        android:layout_height="match_parent"
+        android:id="@+id/list_view"
+        android:divider="@android:color/white"
+        android:dividerHeight="0dp"/>
 
 </LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myapp="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_calendar_fragment"
+        android:icon="@drawable/ic_calendar_menu"
+        android:title=""
+        myapp:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_selected"
+        android:icon="@drawable/checked"
+        android:title=""
+        android:visible="true"
+        myapp:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_choose"
+        android:icon="@drawable/menu"
+        android:title=""
+        android:visible="false"
+        myapp:showAsAction="ifRoom" />
+    <group android:id="@+id/menu_context"
+        android:visible="false">
+        <item
+            android:id="@+id/menu_delivery_request"
+            android:title="@string/delivery_request"
+            myapp:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/menu_share"
+            android:title="@string/share_parcels"
+            myapp:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/menu_make_payment"
+            android:title="@string/make_payment"
+            myapp:showAsAction="ifRoom" />
+    </group>
+
+</menu>

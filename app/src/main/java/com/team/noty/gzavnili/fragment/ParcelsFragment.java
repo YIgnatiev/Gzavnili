@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import java.util.Map;
 
 import io.paperdb.Paper;
 
+import static android.R.attr.fragment;
 import static com.team.noty.gzavnili.BottomNavActivity.showProgressBar;
 
 public class ParcelsFragment extends Fragment{
@@ -48,6 +50,8 @@ public class ParcelsFragment extends Fragment{
     String mApiCode = "testAPI", mUserCode;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
 
+    SimpleFragmentPagerAdapter simpleFragmentPagerAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +63,6 @@ public class ParcelsFragment extends Fragment{
         mUserCode = Paper.book().read("UserCode");
 
         mViewPager = (ViewPager) mView.findViewById(R.id.viewpager);
-
 
         mTabLayout = (TabLayout) mView.findViewById(R.id.tablayout);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -74,7 +77,7 @@ public class ParcelsFragment extends Fragment{
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        SimpleFragmentPagerAdapter simpleFragmentPagerAdapter =
+        simpleFragmentPagerAdapter =
                 new SimpleFragmentPagerAdapter(getChildFragmentManager(), getContext(), mTitle, mStatus);
         viewPager.setAdapter(simpleFragmentPagerAdapter);
     }
@@ -90,7 +93,8 @@ public class ParcelsFragment extends Fragment{
                     public void onResponse(String response) {
                         try {
                             if (android.os.Build.VERSION.SDK_INT > 9) {
-                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder(
+                                ).permitAll().build();
                                 StrictMode.setThreadPolicy(policy);
                             }
                             JSONObject jsonObject = new JSONObject(response);
@@ -101,13 +105,16 @@ public class ParcelsFragment extends Fragment{
                                 getTerSetters = gson.fromJson(jsonArray.toString(), new TypeToken<List<GetTerSetter>>() {
                                 }.getType());
                                 if (getTerSetters.size() != 0) {
-                                    mTitle = new String[getTerSetters.size()];
-                                    mStatus = new String[getTerSetters.size()];
+                                    mTitle = new String[getTerSetters.size() + 1];
+                                    mStatus = new String[getTerSetters.size() + 1];
+                                    mTitle[0] = "All";
+                                    mStatus[0] = "";
                                     for (int i = 0; i < getTerSetters.size(); i++) {
-                                        mTitle[i] = getTerSetters.get(i).getLongName();
-                                        mStatus[i] = getTerSetters.get(i).getShortName();
+                                        mTitle[i + 1] = getTerSetters.get(i).getLongName();
+                                        mStatus[i + 1] = getTerSetters.get(i).getShortName();
                                     }
                                     setupViewPager(mViewPager);
+
                                 }
                             }
                             showProgressBar(false);
@@ -135,5 +142,28 @@ public class ParcelsFragment extends Fragment{
         };
         queue.add(strRequest);
     }
+
+
+
+    public void checkLog(boolean visibility){
+        Fragment page = getChildFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + mViewPager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        if (page != null) {
+            ((ParcelListFragment)page).callSelected(visibility);
+        }
+    }
+
+    public String getParcelsId(){
+        String parcelId = "";
+        Fragment page = getChildFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + mViewPager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        if (page != null) {
+            parcelId = ((ParcelListFragment)page).getParcelsId();
+        }
+        return parcelId;
+    }
+
 
 }

@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -32,5 +33,9 @@ dependencies {
     compile 'com.android.support:support-vector-drawable:25.3.1'
     compile 'io.paperdb:paperdb:2.1'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.google.android.gms:play-services:11.0.2'
+    compile 'com.github.clans:fab:1.6.4'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
 }

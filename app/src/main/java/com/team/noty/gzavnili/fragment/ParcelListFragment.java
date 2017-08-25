@@ -1,13 +1,14 @@
 package com.team.noty.gzavnili.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -46,8 +47,9 @@ public class ParcelListFragment extends Fragment{
     String mApiCode = "testAPI", mUserCode, mStatus;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
     ArrayList<ParcelData> parcelDatas = new ArrayList<>();
-    ParcelsListAdapter adapter;
+    public ParcelsListAdapter adapter;
     BottomNavActivity bottomNavActivity;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,8 +72,19 @@ public class ParcelListFragment extends Fragment{
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Paper.book().write("tracking", getTerSetters.get(position).getId());
                 bottomNavActivity.replaceFragment(new DetailParcelInfoFragment());
                 bottomNavActivity.changeToolbar(1);
+            }
+        });
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                bottomNavActivity.createFloatingButtonMenu(getTerSetters.get(position).getStatus(),
+                        getTerSetters.get(position).getTrackingNumber(),
+                        getTerSetters.get(position).getId());
+                return true;
             }
         });
 
@@ -90,7 +103,7 @@ public class ParcelListFragment extends Fragment{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("MyLog", "response parcels " + response);
+                        Log.d("MyLog", "all parcels" + response);
                         try {
                             showProgressBar(false);
                             JSONObject jsonObject = new JSONObject(response);
@@ -103,18 +116,20 @@ public class ParcelListFragment extends Fragment{
                                 if (getTerSetters.size() != 0) {
                                     boolean mCorrect, mUnpaid;
                                     for (int i = 0; i < getTerSetters.size(); i++) {
-                                        mCorrect = isCorrect(getTerSetters.get(i).getmValue(),
-                                                getTerSetters.get(i).getmStore(),
-                                                getTerSetters.get(i).getmContents());
+                                        mCorrect = isCorrect(getTerSetters.get(i).getValue(),
+                                                getTerSetters.get(i).getStore(),
+                                                getTerSetters.get(i).getContents());
 
-                                        mUnpaid = isPaid(getTerSetters.get(i).getmPaid(),
-                                                getTerSetters.get(i).getmDept());
+                                        mUnpaid = isPaid(getTerSetters.get(i).getPaid(),
+                                                getTerSetters.get(i).getDept());
 
                                         parcelDatas.add(new ParcelData(getTerSetters.get(i).getLocation(),
-                                                getTerSetters.get(i).getTrackingNumber(), mCorrect, mUnpaid));
+                                                getTerSetters.get(i).getTrackingNumber(), mCorrect, mUnpaid,
+                                                getTerSetters.get(i).getId(), false));
                                     }
                                     adapter = new ParcelsListAdapter(getContext(), parcelDatas);
                                     mListView.setAdapter(adapter);
+
                                 }
                             }
 
@@ -142,6 +157,20 @@ public class ParcelListFragment extends Fragment{
 
     }
 
+    public String getParcelsId(){
+        String parcelId = "";
+        for (ParcelData p : adapter.getBox()) {
+            if (p.box) {
+                parcelId += p.getParcelId() + ", ";
+            }
+        }
+        return parcelId;
+    }
+
+    public void callSelected(boolean visibility){
+        adapter.isSelected(visibility);
+        adapter.notifyDataSetChanged();
+    }
     public boolean isCorrect(String mValue, String mStore, String mContents){
         boolean correct;
         if (mContents.length() != 0 && mValue.length() != 0 && Double.parseDouble(mValue) > 0 &&
@@ -154,6 +183,10 @@ public class ParcelListFragment extends Fragment{
 
         return correct;
     }
+    public void checkLog(String message){
+        Log.d("MyLog", message);
+    }
+
 
     public boolean isPaid(String mPaid, String mDept){
         boolean correct;

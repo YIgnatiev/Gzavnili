@@ -45,6 +45,8 @@
         app:itemTextColor="@android:color/white"
         app:menu="@menu/navigation" />
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@color/back_progress_bar"
@@ -62,4 +64,30 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/back_alpha"
+        android:visibility="gone"
+        android:id="@+id/layout_alpha"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
+
+
+    <include layout="@layout/fab_layout"
+        android:id="@+id/layout_fab"
+        android:visibility="gone"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/fab"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:elevation="20dp"
+        android:src="@drawable/ic_fab"
+        />
+
+
 </RelativeLayout>
+

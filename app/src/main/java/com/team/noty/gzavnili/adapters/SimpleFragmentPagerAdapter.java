@@ -26,7 +26,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
     Context mContext;
     LayoutInflater mLayoutInflater;
     String[] mTitle, mStatus;
-
+    ParcelListFragment fragment;
 
     public SimpleFragmentPagerAdapter(FragmentManager Fm, Context context, String[] mTitle, String[] mStatus) {
         super(Fm);
@@ -44,13 +44,13 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Log.d("MyLog", "frag");
         Bundle arguments = new Bundle();
         arguments.putString("status", mStatus[position]);
-        ParcelListFragment fragment = new ParcelListFragment();
+        fragment = new ParcelListFragment();
         fragment.setArguments(arguments);
         return fragment;
     }
+
 
     @Override
     public CharSequence getPageTitle(int position) {
