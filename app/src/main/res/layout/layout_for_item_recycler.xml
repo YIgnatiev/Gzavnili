@@ -16,11 +16,25 @@
         android:paddingStart="15dp"
         android:paddingTop="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_tracking"
-            android:textColor="@color/color_text_label_item" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_tracking"
+                android:textColor="@color/color_text_label_item" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete_parcel"
+                android:id="@+id/btn_delete_parcel"/>
+
+        </LinearLayout>
+
+
 
         <TextView
             android:id="@+id/txt_tracking_number"

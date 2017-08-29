@@ -104,10 +104,21 @@
 
     // fragment payment
     <string name="title_payment">Make Payment</string>
+    <string name="text_parcel_delivery">Parcel Delivery ( + $</string>
+    <string name="text_total_price">Total price:</string>
+    <string name="text_button_account_funds">Account Funds</string>
+    <string name="text_account_balance_payment">Account balance: $</string>
 
     // page settings
     <string name="text_account_details">Account details</string>
     <string name="text_settings_cell_phone">Cell Phone</string>
+    <string name="text_settings_funds">Funds</string>
+    <string name="text_settings_phone">Phone</string>
+    <string name="text_settings_organization">Organization</string>
+    <string name="text_settings_postal_code">Postal Code</string>
+    <string name="text_settings_country">Country</string>
+    <string name="text_settings_state">State</string>
+    <string name="text_settings_city">City</string>
     <string name="text_founds">Funds</string>
     <string name="text_home_address">Home Address</string>
     <string name="text_work_address">Work Address</string>

@@ -1,5 +1,6 @@
 package com.team.noty.gzavnili;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,6 +33,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.paypal.android.sdk.payments.PayPalAuthorization;
+import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.team.noty.gzavnili.fragment.BaseFragment;
 import com.team.noty.gzavnili.fragment.CalculatorFragment;
 import com.team.noty.gzavnili.fragment.DeliveryRequestFragment;
 import com.team.noty.gzavnili.fragment.DetailParcelInfoFragment;
@@ -47,12 +53,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.paperdb.Paper;
 
 public class BottomNavActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final int REQUEST_CODE_PAYMENT = 1;
     static RelativeLayout mRelProgressBar;
     Toolbar mToolbar;
     String mData, mUserCode, mStatus, tracking, mParcelId;
@@ -168,7 +176,7 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
         fab_pay.setOnClickListener(this);
         fab_help.setOnClickListener(this);
 
-        replaceFragment(new ParcelsFragment());
+        commitFirstFragment(new ParcelsFragment());
     }
 
     @Override
@@ -240,6 +248,17 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content, fragment);
         transaction.addToBackStack(null);
+        transaction.commit();
+
+        if (fab.getVisibility() == View.VISIBLE) {
+            hideFloatingButtonMenu(mStatus);
+        }
+    }
+
+    public void commitFirstFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.content, fragment);
         transaction.commit();
 
         if (fab.getVisibility() == View.VISIBLE) {
@@ -421,7 +440,30 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
             });
 
         }
+
+        else if (view == 10) {
+            mToolbar.setTitle("Address");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+            if (mMenu != null) {
+                mMenu.findItem(R.id.menu_calendar_fragment).setVisible(false);
+                mMenu.findItem(R.id.menu_selected).setVisible(false);
+                mMenu.findItem(R.id.menu_choose).setVisible(false);
+                mMenu.setGroupVisible(R.id.menu_context, false);
+            }
+
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                    changeToolbar(8);
+                }
+            });
+
+        }
     }
+
 
     public String parseResponse(String mData) {
 
@@ -603,6 +645,7 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
         this.tracking = tracking;
         mParcelId = parcelId;
 
+
         Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_1);
         Animation show_fab_2 = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_2);
         Animation show_fab_3 = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_3);
@@ -624,7 +667,7 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
                 setLayoutParams(fab_help, -1.75, 1.25, show_fab_5);
                 break;
 
-            case "recieved":
+            case "received":
                 setLayoutParams(fab_edit, 2.2, 0.1, show_fab_1);
                 setLayoutParams(fab_pay, 1.75, 1.25, show_fab_2);
                 setLayoutParams(fab_share, 0.65, 2, show_fab_3);
@@ -716,6 +759,9 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
         Animation hide_fab_5 = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_5);
         Animation hide_fab_6 = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_6);
 
+
+        Log.d("MyLog", "status hide" + mStatus);
+
         switch (status) {
             case "awaiting":
                 setLayoutParams(fab_edit, -0.65, -2, hide_fab_3);
@@ -730,7 +776,7 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
                 setLayoutParams(fab_help, 1.75, -1.25, hide_fab_5);
                 break;
 
-            case "recieved":
+            case "received":
                 setLayoutParams(fab_edit, -2.2, -0.1, hide_fab_1);
                 setLayoutParams(fab_pay, -1.75, -1.25, hide_fab_2);
                 setLayoutParams(fab_share, -0.65, -2, hide_fab_3);
@@ -772,9 +818,9 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case "delivered":
-                setLayoutParams(fab_help, -0.65, -2, hide_fab_3);
+                setLayoutParams(fab_proof, -0.65, -2, hide_fab_3);
 
-                setLayoutParams(fab_proof, 0.65, -2, hide_fab_4);
+                setLayoutParams(fab_help, 0.65, -2, hide_fab_4);
                 setLayoutParams(fab_archive, 1.75, -1.25, hide_fab_5);
                 break;
 
@@ -790,7 +836,6 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
 
             case "onhold":
                 setLayoutParams(fab_edit, -0.65, -2, hide_fab_3);
-
                 setLayoutParams(fab_share, 0.65, -2, hide_fab_4);
                 setLayoutParams(fab_help, 1.75, -1.25, hide_fab_5);
                 break;
@@ -799,14 +844,12 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
                 setLayoutParams(fab_edit, -2.2, -0.1, hide_fab_1);
                 setLayoutParams(fab_pay, -1.75, -1.25, hide_fab_2);
                 setLayoutParams(fab_share, -0.65, -2, hide_fab_3);
-
                 setLayoutParams(fab_help, 0.65, -2, hide_fab_4);
                 setLayoutParams(fab_tracking, 1.75, -1.25, hide_fab_5);
                 break;
 
             case "region":
                 setLayoutParams(fab_edit, -0.65, -2, hide_fab_3);
-
                 setLayoutParams(fab_share, 0.65, -2, hide_fab_4);
                 setLayoutParams(fab_help, 1.75, -1.25, hide_fab_5);
                 break;
@@ -835,7 +878,7 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.fab_show_proof:
-                Paper.book().write("tracking", tracking);
+                Paper.book().write("tracking", mParcelId);
                 replaceFragment(new ProofOfDeliveryFragment());
                 changeToolbar(5);
                 break;
@@ -862,6 +905,7 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.fab_pay:
+                Paper.book().write("parcelID", mParcelId);
                 replaceFragment(new MakePaymentFragment());
                 changeToolbar(6);
                 break;
@@ -894,7 +938,21 @@ public class BottomNavActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        changeToolbar(0);
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        boolean handled = false;
+        for(Fragment f : fragmentList) {
+            if(f instanceof BaseFragment) {
+                handled = ((BaseFragment)f).onBackPressed();
+                if(handled) {
+                    break;
+                }
+            }
+        }
+
+        if(!handled) {
+            super.onBackPressed();
+            changeToolbar(0);
+        }
+
     }
 }

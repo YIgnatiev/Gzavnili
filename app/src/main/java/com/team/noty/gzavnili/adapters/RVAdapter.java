@@ -21,6 +21,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ParcelViewHolder> 
 
 
         TextView mTxtTrackingNumber, mTxtStore, mTxtWeight, mTxtDeliveryPrice;
+        ImageView btnDeleteParcel;
 
         ParcelViewHolder(View itemView) {
             super(itemView);
@@ -28,6 +29,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ParcelViewHolder> 
             mTxtStore = (TextView)itemView.findViewById(R.id.txt_store);
             mTxtWeight = (TextView)itemView.findViewById(R.id.txt_weight);
             mTxtDeliveryPrice = (TextView)itemView.findViewById(R.id.txt_delivery_price);
+
+            btnDeleteParcel = (ImageView) itemView.findViewById(R.id.btn_delete_parcel);
         }
     }
 
@@ -50,11 +53,26 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ParcelViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ParcelViewHolder personViewHolder, int i) {
-        personViewHolder.mTxtTrackingNumber.setText(parcelPaymentDatas.get(i).getTrackingNumber());
-        personViewHolder.mTxtStore.setText(parcelPaymentDatas.get(i).getStore());
-        personViewHolder.mTxtWeight.setText(parcelPaymentDatas.get(i).getWeight() + "kg");
-        personViewHolder.mTxtDeliveryPrice.setText("$" + parcelPaymentDatas.get(i).getDeliveryPrice());
+    public void onBindViewHolder(ParcelViewHolder parcelViewHolder, final int i) {
+        parcelViewHolder.mTxtTrackingNumber.setText(parcelPaymentDatas.get(i).getTrackingNumber());
+        parcelViewHolder.mTxtStore.setText(parcelPaymentDatas.get(i).getStore());
+        parcelViewHolder.mTxtWeight.setText(parcelPaymentDatas.get(i).getWeight() + "kg");
+        parcelViewHolder.mTxtDeliveryPrice.setText("$" + parcelPaymentDatas.get(i).getDeliveryPrice());
+
+        if (parcelPaymentDatas.size() == 1){
+            parcelViewHolder.btnDeleteParcel.setVisibility(View.GONE);
+        }
+        else {
+            parcelViewHolder.btnDeleteParcel.setVisibility(View.VISIBLE);
+        }
+
+        parcelViewHolder.btnDeleteParcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parcelPaymentDatas.remove(i);
+                notifyDataSetChanged();
+            }
+        });
 
     }
 

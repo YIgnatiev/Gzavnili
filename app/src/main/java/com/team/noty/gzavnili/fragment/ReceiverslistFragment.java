@@ -2,6 +2,7 @@ package com.team.noty.gzavnili.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.team.noty.gzavnili.BottomNavActivity;
 import com.team.noty.gzavnili.R;
 import com.team.noty.gzavnili.api.GetTerSetter;
 
@@ -34,7 +36,7 @@ import io.paperdb.Paper;
 
 import static com.team.noty.gzavnili.BottomNavActivity.showProgressBar;
 
-public class ReceiverslistFragment extends Fragment{
+public class ReceiverslistFragment extends BaseFragment{
 
     private static final String ATTRIBUTE_NAME_TEXT = "text";
     View mView;
@@ -43,6 +45,7 @@ public class ReceiverslistFragment extends Fragment{
     String mUrlGetReceiverList = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=receiverlist";
     String mApiCode = "testAPI", mUserCode;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
+    BottomNavActivity bottomNavActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +56,8 @@ public class ReceiverslistFragment extends Fragment{
         Paper.init(getContext());
 
         mUserCode = Paper.book().read("UserCode");
+
+        bottomNavActivity = (BottomNavActivity) getActivity();
 
         listView = (ListView) mView.findViewById(R.id.list_view);
 
@@ -127,5 +132,18 @@ public class ReceiverslistFragment extends Fragment{
         };
         queue.add(strRequest);
 
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStack();
+            bottomNavActivity.changeToolbar(8);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

@@ -103,7 +103,6 @@ public class ParcelListFragment extends Fragment{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("MyLog", "all parcels" + response);
                         try {
                             showProgressBar(false);
                             JSONObject jsonObject = new JSONObject(response);
@@ -182,9 +181,6 @@ public class ParcelListFragment extends Fragment{
         }
 
         return correct;
-    }
-    public void checkLog(String message){
-        Log.d("MyLog", message);
     }
 
 

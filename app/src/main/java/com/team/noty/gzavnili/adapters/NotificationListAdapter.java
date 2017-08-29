@@ -3,6 +3,7 @@ package com.team.noty.gzavnili.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class NotificationListAdapter extends BaseAdapter {
         TextView mTxtDate = (TextView) convertView.findViewById(R.id.txt_date);
 
 
-        mTxtMessage.setText(notificationDatas.get(position).getMessage());
+        mTxtMessage.setText(Html.fromHtml(notificationDatas.get(position).getMessage()));
 
         mTxtDate.setText(splitTime(notificationDatas.get(position).getDate()));
 

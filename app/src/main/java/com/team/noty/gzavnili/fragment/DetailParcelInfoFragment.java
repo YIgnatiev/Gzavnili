@@ -115,7 +115,6 @@ public class DetailParcelInfoFragment extends Fragment implements View.OnClickLi
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("MyLog", "response detail " + response);
                         getContentList(mUserCode);
                         try {
                             showProgressBar(false);
@@ -336,7 +335,6 @@ public class DetailParcelInfoFragment extends Fragment implements View.OnClickLi
                     R.layout.item_for_detail_tracking, null);
             linearLayout.addView(child1);
 
-            Log.d("MyLog", "i = " + i + " " + getTerSetter.get(i).getTimLine());
             TextView txt_date = (TextView) child1.findViewById(R.id.txt_date);
             TextView txt_location = (TextView) child1.findViewById(R.id.txt_location);
 
