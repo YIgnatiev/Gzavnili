@@ -1,14 +1,11 @@
 package com.team.noty.gzavnili.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -29,25 +26,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import io.paperdb.Paper;
 
 import static com.team.noty.gzavnili.BottomNavActivity.showProgressBar;
 
-public class ParcelListFragment extends Fragment{
+public class ParcelListFragment extends Fragment {
 
+    public ParcelsListAdapter adapter;
     View mView;
     ListView mListView;
-
     String mUrlGetParcels = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=parcels";
-    String mApiCode = "testAPI", mUserCode, mStatus;
+    String mApiCode = "testAPI", mUserCode, mStatus, language;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
     ArrayList<ParcelData> parcelDatas = new ArrayList<>();
-    public ParcelsListAdapter adapter;
     BottomNavActivity bottomNavActivity;
 
 
@@ -55,13 +57,14 @@ public class ParcelListFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView =  inflater.inflate(R.layout.fragment_list, container, false);
+        mView = inflater.inflate(R.layout.fragment_list, container, false);
 
         Paper.init(getContext());
         Bundle arguments = getArguments();
         mStatus = arguments.getString("status");
 
         mUserCode = Paper.book().read("UserCode");
+        language = Paper.book().read("language");
 
         mListView = (ListView) mView.findViewById(R.id.list_view);
 
@@ -83,13 +86,17 @@ public class ParcelListFragment extends Fragment{
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 bottomNavActivity.createFloatingButtonMenu(getTerSetters.get(position).getStatus(),
                         getTerSetters.get(position).getTrackingNumber(),
-                        getTerSetters.get(position).getId());
+                        getTerSetters.get(position).getId(), getTerSetters.get(position).getStore(),
+                        getTerSetters.get(position).getContents(), getTerSetters.get(position).getValue(),
+                        getTerSetters.get(position).getDept(), getTerSetters.get(position).getPaid(),
+                        getTerSetters.get(position).getDeliveryRequest());
                 return true;
             }
         });
 
         return mView;
     }
+
 
     public void getParcelList(final String mUserCode, final String mStatus) {
 
@@ -111,7 +118,8 @@ public class ParcelListFragment extends Fragment{
                                 jsonArray = new JSONArray(jsonObject.getString("DATA"));
                                 Gson gson = new Gson();
                                 getTerSetters = gson.fromJson(jsonArray.toString(),
-                                        new TypeToken<List<GetTerSetter>>() {}.getType());
+                                        new TypeToken<List<GetTerSetter>>() {
+                                        }.getType());
                                 if (getTerSetters.size() != 0) {
                                     boolean mCorrect, mUnpaid;
                                     for (int i = 0; i < getTerSetters.size(); i++) {
@@ -124,8 +132,10 @@ public class ParcelListFragment extends Fragment{
 
                                         parcelDatas.add(new ParcelData(getTerSetters.get(i).getLocation(),
                                                 getTerSetters.get(i).getTrackingNumber(), mCorrect, mUnpaid,
-                                                getTerSetters.get(i).getId(), false));
+                                                getTerSetters.get(i).getId(), false, getTerSetters.get(i).getStatus(),
+                                                getTerSetters.get(i).getDateCreated()));
                                     }
+                                    Collections.sort(parcelDatas, byDate);
                                     adapter = new ParcelsListAdapter(getContext(), parcelDatas);
                                     mListView.setAdapter(adapter);
 
@@ -149,6 +159,7 @@ public class ParcelListFragment extends Fragment{
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
                 params.put("status", mStatus);
+                params.put("language", language);
                 return params;
             }
         };
@@ -156,7 +167,27 @@ public class ParcelListFragment extends Fragment{
 
     }
 
-    public String getParcelsId(){
+    public Comparator<ParcelData> byDate = new Comparator<ParcelData>() {
+        SimpleDateFormat format = new java.text.SimpleDateFormat("MMMMM, dd yyyy HH:mm:ss",
+                Locale.US);
+
+        public int compare(ParcelData ord1, ParcelData ord2) {
+            Date d1 = null;
+            Date d2 = null;
+            try {
+                d1 = format.parse(ord1.getDateCreate());
+                d2 = format.parse(ord2.getDateCreate());
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+            return (d1.getTime() > d2.getTime() ? -1 : 1);     //descending
+            //  return (d1.getTime() > d2.getTime() ? 1 : -1);     //ascending
+        }
+    };
+    public String getParcelsId() {
         String parcelId = "";
         for (ParcelData p : adapter.getBox()) {
             if (p.box) {
@@ -166,17 +197,32 @@ public class ParcelListFragment extends Fragment{
         return parcelId;
     }
 
-    public void callSelected(boolean visibility){
+    public String[] getStatusList() {
+        String[] parcelId = new String[adapter.getBox().size()];
+        int i = 0;
+        for (ParcelData p : adapter.getBox()) {
+            if (p.box) {
+                parcelId[i] = p.getStatus();
+            }
+        }
+        return parcelId;
+    }
+
+    public void updateList() {
+        getParcelList(mUserCode, mStatus);
+    }
+
+    public void callSelected(boolean visibility) {
         adapter.isSelected(visibility);
         adapter.notifyDataSetChanged();
     }
-    public boolean isCorrect(String mValue, String mStore, String mContents){
+
+    public boolean isCorrect(String mValue, String mStore, String mContents) {
         boolean correct;
         if (mContents.length() != 0 && mValue.length() != 0 && Double.parseDouble(mValue) > 0 &&
-                mStore.length() != 0){
+                mStore.length() != 0) {
             correct = false;
-        }
-        else {
+        } else {
             correct = true;
         }
 
@@ -184,12 +230,11 @@ public class ParcelListFragment extends Fragment{
     }
 
 
-    public boolean isPaid(String mPaid, String mDept){
+    public boolean isPaid(String mPaid, String mDept) {
         boolean correct;
-        if (mPaid.length() != 0 && mDept.length() != 0 && Double.parseDouble(mPaid) > 0){
+        if (mPaid.length() != 0 && mDept.length() != 0 && Double.parseDouble(mPaid) > 0) {
             correct = false;
-        }
-        else {
+        } else {
             correct = true;
         }
 

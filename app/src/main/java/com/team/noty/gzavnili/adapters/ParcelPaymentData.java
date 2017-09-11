@@ -16,6 +16,13 @@ public class ParcelPaymentData {
         this.deliveryPrice = deliveryPrice;
     }
 
+    public ParcelPaymentData(String trackingNumber, String store, String weight){
+
+        this.trackingNumber = trackingNumber;
+        this.store = store;
+        this.weight = weight;
+    }
+
     public String getTrackingNumber() {
         return trackingNumber;
     }

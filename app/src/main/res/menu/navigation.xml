@@ -21,8 +21,9 @@
         android:icon="@mipmap/ic_offices"
         android:title="@string/title_offices" />
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@mipmap/ic_settings"
-        android:title="@string/title_settings" />
+        android:id="@+id/navigation_some_pages"
+        android:icon="@drawable/menu"
+        android:title="More"
+        />
 
 </menu>

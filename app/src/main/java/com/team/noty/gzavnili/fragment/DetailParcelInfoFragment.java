@@ -58,7 +58,7 @@ public class DetailParcelInfoFragment extends Fragment implements View.OnClickLi
     String mUrlGetParcels = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=parcels";
     String mUrlGetContentList = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=contentlist";
     String mUrlCorrectParcel = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=parcelcorrect";
-    String mApiCode = "testAPI", mTracking, mUserCode, mParcelId, mStrContent;
+    String mApiCode = "testAPI", mTracking, mUserCode, mParcelId, mStrContent, language;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
     ArrayList<GetTerSetter> getTimeLine = new ArrayList<>();
     ArrayList<GetTerSetter> contentList = new ArrayList<>();
@@ -73,6 +73,7 @@ public class DetailParcelInfoFragment extends Fragment implements View.OnClickLi
 
         mTracking = Paper.book().read("tracking");
         mUserCode = Paper.book().read("UserCode");
+        language = Paper.book().read("language");
 
         mTxtTrackingNumber = (TextView) mView.findViewById(R.id.txt_tracking_number);
         mTxtWeight = (TextView) mView.findViewById(R.id.txt_weight);
@@ -172,6 +173,7 @@ public class DetailParcelInfoFragment extends Fragment implements View.OnClickLi
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
                 params.put("tracking", mTracking);
+                params.put("language", language);
                 return params;
             }
         };
@@ -225,6 +227,7 @@ public class DetailParcelInfoFragment extends Fragment implements View.OnClickLi
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
+                params.put("language", language);
                 return params;
             }
         };

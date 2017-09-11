@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.team.noty.gzavnili.R;
@@ -22,6 +23,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ParcelViewHolder> 
 
         TextView mTxtTrackingNumber, mTxtStore, mTxtWeight, mTxtDeliveryPrice;
         ImageView btnDeleteParcel;
+        LinearLayout linearLayout;
 
         ParcelViewHolder(View itemView) {
             super(itemView);
@@ -31,6 +33,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ParcelViewHolder> 
             mTxtDeliveryPrice = (TextView)itemView.findViewById(R.id.txt_delivery_price);
 
             btnDeleteParcel = (ImageView) itemView.findViewById(R.id.btn_delete_parcel);
+
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.layout_delivery_price);
         }
     }
 
@@ -57,7 +61,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ParcelViewHolder> 
         parcelViewHolder.mTxtTrackingNumber.setText(parcelPaymentDatas.get(i).getTrackingNumber());
         parcelViewHolder.mTxtStore.setText(parcelPaymentDatas.get(i).getStore());
         parcelViewHolder.mTxtWeight.setText(parcelPaymentDatas.get(i).getWeight() + "kg");
-        parcelViewHolder.mTxtDeliveryPrice.setText("$" + parcelPaymentDatas.get(i).getDeliveryPrice());
+        if (parcelPaymentDatas.get(i).getDeliveryPrice() != null) {
+            parcelViewHolder.mTxtDeliveryPrice.setText("$" + parcelPaymentDatas.get(i).getDeliveryPrice());
+            parcelViewHolder.linearLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            parcelViewHolder.linearLayout.setVisibility(View.GONE);
+        }
 
         if (parcelPaymentDatas.size() == 1){
             parcelViewHolder.btnDeleteParcel.setVisibility(View.GONE);

@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.paperdb.Paper;
+
 import static com.team.noty.gzavnili.BottomNavActivity.showProgressBar;
 
 /**
@@ -40,7 +42,7 @@ public class GeorgiaOfficesListFragment extends Fragment {
 
     public OfficesListAdapter adapter;
     String mUrlGetOffices = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=offices";
-    String mApiCode = "testAPI";
+    String mApiCode = "testAPI", language;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
     ArrayList<OfficeData> officeDatas = new ArrayList<>();
 
@@ -57,6 +59,10 @@ public class GeorgiaOfficesListFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.list_view);
 
         adapter = new OfficesListAdapter(getContext(), officeDatas);
+
+        Paper.init(getContext());
+
+        language = Paper.book().read("language");
 
         listView.setAdapter(adapter);
 
@@ -117,7 +123,7 @@ public class GeorgiaOfficesListFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("apicode", mApiCode);
-                params.put("language", "en");
+                params.put("language", language);
                 return params;
             }
         };

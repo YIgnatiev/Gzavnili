@@ -45,7 +45,7 @@ public class ProofOfDeliveryFragment extends Fragment{
     ImageView imgAvtograph;
 
     String mUrlGetParcels = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=parcels";
-    String mApiCode = "testAPI", mTracking, mUserCode, mStrContent;
+    String mApiCode = "testAPI", mTracking, mUserCode, mStrContent, language;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
 
     @Override
@@ -58,6 +58,7 @@ public class ProofOfDeliveryFragment extends Fragment{
 
         mTracking = Paper.book().read("tracking");
         mUserCode = Paper.book().read("UserCode");
+        language = Paper.book().read("language");
 
         Paper.book().delete("tracking");
 
@@ -148,6 +149,7 @@ public class ProofOfDeliveryFragment extends Fragment{
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
                 params.put("tracking", mTracking);
+                params.put("language", language);
                 return params;
             }
         };

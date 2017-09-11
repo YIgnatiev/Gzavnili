@@ -321,5 +321,20 @@ public class GetTerSetter {
         return timLine;
     }
 
+    @SerializedName("CREATED")
+    String dateCreated;
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    @SerializedName("DELIVERYREQUEST")
+    String deliveryRequest;
+
+    public String getDeliveryRequest() {
+        return deliveryRequest;
+    }
+
+
 
 }

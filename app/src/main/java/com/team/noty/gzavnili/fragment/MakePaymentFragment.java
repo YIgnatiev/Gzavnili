@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +59,9 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
     Button btnCreditCard, btnPayPal;
 
     String mUrlPaymentInfo = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=paymentinfo";
+    String mUrlAddPayment = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=addpayment";
     String mApiCode = "testAPI", mUserCode, mParcelId, mDeliveryPrice, mPayLink, mPayDeliveryLink,
-            iDTransaction, totalAmount, parcelDelivery;
+            iDTransaction, totalAmount, parcelDelivery, language;
     String[] splitId;
     private List<ParcelPaymentData> parcelPaymentDatas = new ArrayList<>();
     String mUrlGetParcels = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=parcels";
@@ -110,8 +110,8 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
 
         mParcelId = Paper.book().read("parcelID");
         mUserCode = Paper.book().read("UserCode");
+        language = Paper.book().read("language");
 
-        Log.d("MyLog", "mparcel id " + mParcelId);
         Paper.book().delete("parcelID");
 
         rv=(RecyclerView) mView.findViewById(R.id.recycler_view);
@@ -169,7 +169,6 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("MyLog", response);
                         try {
                             showProgressBar(false);
                             JSONObject jsonObject = new JSONObject(response);
@@ -209,6 +208,7 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
                 params.put("parcelid", mParcelId);
+                params.put("language", language);
                 return params;
             }
         };
@@ -241,15 +241,23 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
                                 int step = 0;
                                 if (getTerSetters.size() != 0) {
                                     for (int i = 0; i < getTerSetters.size(); i++) {
-                                        if (step == splitId.length - 1){
-                                            break;
+                                        if (splitId.length - 1 != 0) {
+                                            if (step == splitId.length - 1) {
+                                                break;
+                                            } else if (!splitId[step].trim().equals("")) {
+                                                if (splitId[step].trim().equals(getTerSetters.get(i).getId())) {
+                                                    parcelPaymentDatas.add(new ParcelPaymentData(
+                                                            getTerSetters.get(i).getTrackingNumber(), getTerSetters.get(i).getStore(),
+                                                            getTerSetters.get(i).getWeight(), mDeliveryPrice));
+                                                    step++;
+                                                }
+                                            }
                                         }
-                                        else if (!splitId[step].trim().equals("")) {
+                                        else{
                                             if (splitId[step].trim().equals(getTerSetters.get(i).getId())) {
                                                 parcelPaymentDatas.add(new ParcelPaymentData(
                                                         getTerSetters.get(i).getTrackingNumber(), getTerSetters.get(i).getStore(),
                                                         getTerSetters.get(i).getWeight(), mDeliveryPrice));
-                                                step++;
                                             }
                                         }
                                     }
@@ -277,6 +285,7 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
                 params.put("status", "");
+                params.put("language", language);
                 return params;
             }
         };
@@ -311,8 +320,6 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
 
                         iDTransaction = jsonObject.getString("id");
 
-                        Log.d("MyLog", "id " + iDTransaction);
-
                         addPaymentMethod(iDTransaction);
 
                         Toast.makeText(getContext(), "Parcel placed",
@@ -334,11 +341,10 @@ public class MakePaymentFragment extends Fragment implements View.OnClickListene
     public void addPaymentMethod(final String id){
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
-        StringRequest strRequest = new StringRequest(Request.Method.POST, mUrlPaymentInfo,
+        StringRequest strRequest = new StringRequest(Request.Method.POST, mUrlAddPayment,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("MyLog", "pay method " + response);
                         FragmentManager fragmentManager = getFragmentManager();
                         if (fragmentManager.getBackStackEntryCount() != 0) {
                             fragmentManager.popBackStack();

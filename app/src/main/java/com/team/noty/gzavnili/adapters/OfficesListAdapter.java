@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.team.noty.gzavnili.R;
@@ -83,7 +84,53 @@ public class OfficesListAdapter extends BaseAdapter {
             }
         });
 
+        mTxtTel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callPhone(mOfficesData.get(position).getTel());
+            }
+        });
+
+        mTxtAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMaps(latLng, mOfficesData.get(position).getName());
+            }
+        });
+
+        mEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail(mOfficesData.get(position).getEmail());
+            }
+        });
+
         return convertView;
+    }
+
+    public void callPhone(String text)
+    {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + text));
+        try {
+            callIntent.setPackage("com.android.phone");
+            mContext.startActivity(callIntent);
+        } catch (Exception e) {
+            callIntent.setPackage("com.android.server.telecom");
+            mContext.startActivity(callIntent);
+        }
+    }
+    public void sendEmail(String email) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Help");
+
+        try {
+            mContext.startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(mContext, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void openMaps(LatLng latLng, String label){

@@ -65,8 +65,10 @@ public class ParcelsListAdapter extends BaseAdapter {
         TextView mTxtLocation = (TextView) convertView.findViewById(R.id.txt_location);
         TextView mTxtTrackingNumber = (TextView) convertView.findViewById(R.id.txt_tracking_number);
 
-        LinearLayout mLineCorrect = (LinearLayout) convertView.findViewById(R.id.line_correct);
+        LinearLayout mLineUndeclared = (LinearLayout) convertView.findViewById(R.id.line_undeclared);
+        LinearLayout mLineDeclared = (LinearLayout) convertView.findViewById(R.id.line_declared);
         LinearLayout mLinePaid = (LinearLayout) convertView.findViewById(R.id.line_paid);
+        LinearLayout mLineUnPaid = (LinearLayout) convertView.findViewById(R.id.line_unpaid);
 
         cb_selected = (CheckBox) convertView.findViewById(R.id.cb_select);
 
@@ -81,17 +83,22 @@ public class ParcelsListAdapter extends BaseAdapter {
         mTxtTrackingNumber.setText(mParcelData.get(position).getmTrackingNumber());
 
         if (!mParcelData.get(position).ismCorrect()){
-            mLineCorrect.setVisibility(View.GONE);
+            mLineUndeclared.setVisibility(View.GONE);
+            mLineDeclared.setVisibility(View.VISIBLE);
         }
         else {
-            mLineCorrect.setVisibility(View.VISIBLE);
+            mLineUndeclared.setVisibility(View.VISIBLE);
+            mLineDeclared.setVisibility(View.GONE);
         }
 
         if (!mParcelData.get(position).ismUnpaid()){
-            mLinePaid.setVisibility(View.GONE);
+            mLinePaid.setVisibility(View.VISIBLE);
+            mLineUnPaid.setVisibility(View.GONE);
+
         }
         else {
-            mLinePaid.setVisibility(View.VISIBLE);
+            mLinePaid.setVisibility(View.GONE);
+            mLineUnPaid.setVisibility(View.VISIBLE);
         }
 
         ParcelData p = getProduct(position);
@@ -124,7 +131,7 @@ public class ParcelsListAdapter extends BaseAdapter {
         public void onCheckedChanged(CompoundButton buttonView,
                                      boolean isChecked) {
             // меняем данные товара (в корзине или нет)
-
+            getProduct((Integer) buttonView.getTag()).box = isChecked;
             if (isChecked == true) {
                 if(mContext instanceof BottomNavActivity){
                     ((BottomNavActivity)mContext).enabledMenuGroup(true);
@@ -139,7 +146,7 @@ public class ParcelsListAdapter extends BaseAdapter {
                     }
                 }
             }
-            getProduct((Integer) buttonView.getTag()).box = isChecked;
+
         }
     };
 

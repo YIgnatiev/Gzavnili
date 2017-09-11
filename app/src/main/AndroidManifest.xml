@@ -3,6 +3,9 @@
     package="com.team.noty.gzavnili">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -29,8 +32,11 @@
         <activity
             android:name=".BottomNavActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:configChanges="locale|orientation"/>
         <activity android:name=".WebViewLink"/>
+        <activity android:name=".WebViewPrivacyPolicy"/>
+
 
         <service android:name="com.paypal.android.sdk.payments.PayPalService" android:exported="false" />
 
@@ -41,6 +47,7 @@
         <activity android:name="com.paypal.android.sdk.payments.PayPalFuturePaymentActivity" />
         <activity android:name="com.paypal.android.sdk.payments.FuturePaymentConsentActivity" />
         <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
+
     </application>
 
 </manifest>

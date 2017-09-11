@@ -5,11 +5,11 @@
     android:orientation="horizontal">
 
     <CheckBox
+        android:id="@+id/cb_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:id="@+id/cb_select"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,8 +60,9 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/line_correct"
+                android:id="@+id/line_undeclared"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
@@ -75,14 +76,36 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:text="CORRECT PARCEL"
+                    android:text="@string/text_undeclared_parcel"
                     android:textColor="#f5a623"
                     android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/line_paid"
+                android:id="@+id/line_declared"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_declared" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/text_declared_parcel"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line_unpaid"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
@@ -95,8 +118,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="UNPAID PARCEL"
+                    android:text="@string/text_unpaid_parcel"
                     android:textColor="#f5a623"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line_paid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_paid" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/text_paid_parcel"
+                    android:textColor="@color/green"
                     android:textSize="15sp" />
             </LinearLayout>
 

@@ -43,7 +43,7 @@ public class ReceiverslistFragment extends BaseFragment{
     ListView listView;
 
     String mUrlGetReceiverList = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=receiverlist";
-    String mApiCode = "testAPI", mUserCode;
+    String mApiCode = "testAPI", mUserCode, language;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
     BottomNavActivity bottomNavActivity;
 
@@ -56,6 +56,7 @@ public class ReceiverslistFragment extends BaseFragment{
         Paper.init(getContext());
 
         mUserCode = Paper.book().read("UserCode");
+        language = Paper.book().read("language");
 
         bottomNavActivity = (BottomNavActivity) getActivity();
 
@@ -127,6 +128,7 @@ public class ReceiverslistFragment extends BaseFragment{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
+                params.put("language", language);
                 return params;
             }
         };

@@ -1,6 +1,7 @@
 package com.team.noty.gzavnili;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -9,11 +10,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import java.util.Locale;
+
+import io.paperdb.Paper;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Paper.init(this);
+
+        String languageToLoad  = Paper.book().read("language"); // your language
+        if (languageToLoad == null)
+        {
+            languageToLoad = "en";
+            Paper.book().write("language", "en");
+        }
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
         setContentView(R.layout.activity_splash);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

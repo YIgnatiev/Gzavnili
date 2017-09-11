@@ -33,6 +33,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -52,7 +54,7 @@ public class ParcelScheduleFragment extends Fragment{
 
     String mUrlGetDates = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=deliverydates";
     String mUrlGetParcels = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=parcels";
-    String mApiCode = "testAPI", mUserCode;
+    String mApiCode = "testAPI", mUserCode, language;
     ArrayList<GetTerSetter> getTerSetters = new  ArrayList<>();
     ArrayList<GetTerSetter> getListParcels = new  ArrayList<>();
     ArrayList<ParcelData> parcelDatas = new ArrayList<>();
@@ -69,6 +71,7 @@ public class ParcelScheduleFragment extends Fragment{
         Paper.init(getContext());
 
         mUserCode = Paper.book().read("UserCode");
+        language = Paper.book().read("language");
 
         cv = (CalendarView) mView.findViewById(R.id.calendar_view);
         listView = (ListView) mView.findViewById(R.id.list_view);
@@ -166,6 +169,7 @@ public class ParcelScheduleFragment extends Fragment{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
+                params.put("language", language);
                 return params;
             }
         };
@@ -206,9 +210,23 @@ public class ParcelScheduleFragment extends Fragment{
 
                                         parcelDatas.add(new ParcelData(getListParcels.get(i).getLocation(),
                                                 getListParcels.get(i).getTrackingNumber(), mCorrect, mUnpaid,
-                                                getTerSetters.get(i).getId(), false));
+                                                getTerSetters.get(i).getId(), false, getTerSetters.get(i).getStatus(),
+                                                getTerSetters.get(i).getDateCreated()));
                                     }
+                                    Collections.sort(parcelDatas, new Comparator<ParcelData>() {
+                                        SimpleDateFormat format = new java.text.SimpleDateFormat("MMMMM, dd yyyy HH:mm:ss",
+                                                Locale.US);
 
+                                        @Override
+                                        public int compare(ParcelData lhs, ParcelData rhs) {
+                                            try {
+                                                return format.parse(lhs.getDateCreate()).compareTo(format.parse(rhs.getDateCreate()));
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                            return 0;
+                                        }
+                                    });
                                     adapter = new ParcelsListAdapter(getContext(), parcelDatas);
                                     listView.setAdapter(adapter);
 
@@ -232,6 +250,7 @@ public class ParcelScheduleFragment extends Fragment{
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
                 params.put("deliverydate", mDeliveryDate);
+                params.put("language", language);
                 return params;
             }
         };

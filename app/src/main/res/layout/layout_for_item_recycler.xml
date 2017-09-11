@@ -104,6 +104,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/layout_delivery_price"
                 android:layout_height="wrap_content">
 
                 <TextView

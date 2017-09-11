@@ -123,14 +123,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("MyLog", "login " + response);
                         try {
                             showProgressBar(false);
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("STATUS").equals("S")) {
                                 Paper.book().write("responseLogin", jsonObject.getString("DATA"));
                                 Intent intent = new Intent(LoginActivity.this, BottomNavActivity.class);
-                                intent.putExtra("response", jsonObject.getString("DATA"));
                                 startActivity(intent);
                                 finish();
                             }

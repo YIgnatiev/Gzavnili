@@ -1,5 +1,7 @@
 package com.team.noty.gzavnili.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.paperdb.Paper;
+
 import static com.team.noty.gzavnili.BottomNavActivity.showProgressBar;
 
 /**
@@ -40,7 +45,7 @@ public class UsaOfficesListFragment extends Fragment {
 
     public OfficesListAdapter adapter;
     String mUrlGetOffices = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=offices";
-    String mApiCode = "testAPI";
+    String mApiCode = "testAPI", language;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
     ArrayList<OfficeData> officeDatas = new ArrayList<>();
     ListView listView;
@@ -57,6 +62,9 @@ public class UsaOfficesListFragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.list_view);
 
+        Paper.init(getContext());
+
+        language = Paper.book().read("language");
 
         getOfficesList();
 
@@ -115,12 +123,13 @@ public class UsaOfficesListFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("apicode", mApiCode);
-                params.put("language", "en");
+                params.put("language", language);
                 return params;
             }
         };
         queue.add(strRequest);
 
     }
+
 
 }

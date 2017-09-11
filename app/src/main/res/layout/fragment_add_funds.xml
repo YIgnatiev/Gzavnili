@@ -18,13 +18,30 @@
         android:src="@mipmap/ic_make_payment"
         app:civ_border_color="#FFFFFF" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        android:text="@string/text_account_balance"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/text_account_balance"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_balance"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorPrimary"
+            android:text=""
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,41 +54,49 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:id="@+id/edit_amount"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:inputType="numberDecimal"
         android:textColor="@color/text_color_grey"
         android:background="@drawable/back_for_edit_sig_up"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content">
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp">
+
         <Button
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="45dp"
-            android:text="Pay Pal"
-            android:textStyle="italic"
-            android:textSize="18sp"
-            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:id="@+id/btn_pay_pal"
+            android:background="@drawable/back_for_blue_button"
+            android:text="PayPal"
             android:textAllCaps="false"
-            android:background="@drawable/back_for_blue_button"/>
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <View
             android:layout_width="15dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:id="@+id/btn_credit_card"
             android:layout_weight="1"
+            android:background="@drawable/back_for_blue_button"
             android:text="Credit Card"
-            android:textColor="@color/white"
             android:textAllCaps="false"
-            android:textSize="18sp"
-            android:background="@drawable/back_for_blue_button"/>
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

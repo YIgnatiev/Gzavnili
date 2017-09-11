@@ -47,7 +47,7 @@ public class ParcelsFragment extends Fragment{
 
     String[] mTitle, mStatus;
     String mUrlGetStatus = "http://gz.ecomsolutions.net/apinew/gzavnili.cfm?method=parcelList";
-    String mApiCode = "testAPI", mUserCode;
+    String mApiCode = "testAPI", mUserCode, language;
     ArrayList<GetTerSetter> getTerSetters = new ArrayList<>();
 
     SimpleFragmentPagerAdapter simpleFragmentPagerAdapter;
@@ -61,6 +61,7 @@ public class ParcelsFragment extends Fragment{
         Paper.init(getContext());
 
         mUserCode = Paper.book().read("UserCode");
+        language = Paper.book().read("language");
 
         mViewPager = (ViewPager) mView.findViewById(R.id.viewpager);
 
@@ -137,6 +138,8 @@ public class ParcelsFragment extends Fragment{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("apicode", mApiCode);
                 params.put("usercode", mUserCode);
+                params.put("language", language);
+
                 return params;
             }
         };
@@ -163,6 +166,27 @@ public class ParcelsFragment extends Fragment{
             parcelId = ((ParcelListFragment)page).getParcelsId();
         }
         return parcelId;
+    }
+
+    public String[] getStatusLists(){
+        Fragment page = getChildFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + mViewPager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        if (page != null) {
+            return ((ParcelListFragment)page).getStatusList();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public void callUpdateList(){
+        Fragment page = getChildFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + mViewPager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        if (page != null) {
+            ((ParcelListFragment)page).updateList();
+        }
     }
 
 
